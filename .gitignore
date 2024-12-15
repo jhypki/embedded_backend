@@ -1,17 +1,17 @@
-# API keys and secrets
+/tmp
+/out-tsc
+/dist
+/.idea
+/coverage
+/uploads
+
+/node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/.pnp
+.pnp.js
 .env
 
-# Dependency directory
-node_modules
 
-# Editors
-.idea
-*.iml
-.vscode/settings.json
-
-# OS metadata
-.DS_Store
-Thumbs.db
-
-# Ignore built ts files
-dist/**/*
+.vscode/*
