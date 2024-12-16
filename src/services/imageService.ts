@@ -1,7 +1,10 @@
+import { callGoogleAI } from '../../utils/callGoogleAI';
+import { encodeImageToBase64 } from './../../utils/encodeImageToBase64';
 import { Image } from '@prisma/client';
 import imageRepository from '../repositories/imageRepository';
 import clientService from './clientService';
 import activationService from './activationService';
+import path from 'path';
 
 class ImageService {
     async saveImage(file: Express.Multer.File): Promise<Image> {
@@ -35,6 +38,26 @@ class ImageService {
         }
 
         return imageRepository.findAll();
+    }
+
+    async generateLabelForImage(id: number): Promise<Image> {
+        const image = await imageRepository.findById(id);
+
+        if (!image) {
+            throw new Error('Image not found');
+        }
+
+        const base64Image = encodeImageToBase64(path.join(__dirname, '../../uploads', image.filename));
+
+        const googleAiResponse = await callGoogleAI(base64Image);
+
+        const label = googleAiResponse?.predictions[0];
+
+        if (!label) {
+            throw new Error('Label not found');
+        }
+
+        return await imageRepository.update(id, { ...image, label: label.charAt(0).toUpperCase() + label.slice(1) });
     }
 }
 

@@ -23,6 +23,17 @@ export class ImageController {
             res.status(500).json({ message: 'Failed to get images' });
         }
     }
+
+    async generateLabelForImage(req: Request, res: Response): Promise<void> {
+        const id = req.params.id;
+        try {
+            const image = await imageService.generateLabelForImage(Number(id));
+            res.status(200).json(image);
+        } catch (error) {
+            console.error('Error generating label:', error);
+            res.status(500).json({ message: 'Failed to generate label' });
+        }
+    }
 }
 
 export default new ImageController();
