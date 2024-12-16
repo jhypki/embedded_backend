@@ -1,9 +1,14 @@
 import { Activation } from '@prisma/client';
 import activationRepository from '../repositories/activationRepository';
+import clientService from './clientService';
 
 class ActivationService {
     async save(activation: Omit<Activation, 'id'>) {
-        return await activationRepository.save(activation);
+        const savedActivation = await activationRepository.save(activation);
+
+        clientService.broadcastActivation();
+
+        return savedActivation;
     }
 
     async getActivations() {

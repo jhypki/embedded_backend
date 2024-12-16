@@ -6,6 +6,10 @@ class ClientService {
     async broadcastImage(data: Image) {
         io.emit(Events.IMAGE_UPLOAD, data);
     }
+
+    async broadcastActivation() {
+        io.emit(Events.SENSOR_ACTIVATED);
+    }
 }
 
 export default new ClientService();

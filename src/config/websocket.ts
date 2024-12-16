@@ -3,7 +3,8 @@ import http from 'http';
 
 export const Events = {
     IMAGE_UPLOAD: 'image-upload',
-    ALARM_TRIGGERED: 'alarm-triggered'
+    ALARM_TRIGGERED: 'alarm-triggered',
+    SENSOR_ACTIVATED: 'sensor-activated'
 };
 
 export const initWebSocket = (server: http.Server) => {
