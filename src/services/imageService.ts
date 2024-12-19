@@ -1,5 +1,5 @@
-import { callGoogleAI } from '../../utils/callGoogleAI';
-import { encodeImageToBase64 } from './../../utils/encodeImageToBase64';
+import { callGoogleAI } from '../utils/callGoogleAI';
+import { encodeImageToBase64 } from '../utils/encodeImageToBase64';
 import { Image } from '@prisma/client';
 import imageRepository from '../repositories/imageRepository';
 import clientService from './clientService';

@@ -1,4 +1,4 @@
-import { GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_LOCATION, GOOGLE_PROJECT_ID } from '../src/config/env';
+import { GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_LOCATION, GOOGLE_PROJECT_ID } from '../config/env';
 import { GoogleAuth } from 'google-auth-library';
 import axios from 'axios';
 

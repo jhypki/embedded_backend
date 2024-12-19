@@ -1,20 +1,24 @@
-FROM node:14
+FROM node:18
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY . .
 
 RUN npm install
 
-COPY . .
+
+RUN mkdir -p /usr/src/app/uploads
+
+RUN npx prisma generate
 
 RUN npm run build
 
 EXPOSE 3000
 
-RUN mkdir -p /usr/src/app/uploads
-
-ENV DATABASE_URL=${DATABASE_URL}
+ENV DATABASE_URL="postgresql://postgres_user:postgres_password@postgres:5432/embedded_db?schema=public"
 ENV OPENAI_API_KEY=${OPENAI_API_KEY}
+ENV GOOGLE_APPLICATION_CREDENTIALS="/usr/src/app/image-captioning.json"
+ENV GOOGLE_PROJECT_ID=${GOOGLE_PROJECT_ID}
+ENV GOOGLE_LOCATION=${GOOGLE_LOCATION}
 
-CMD ["node", "dist/index.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]

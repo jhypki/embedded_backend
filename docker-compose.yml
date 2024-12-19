@@ -13,5 +13,22 @@ services:
         volumes:
             - pgdata:/var/lib/postgresql/data
 
+    backend:
+        build: .
+        container_name: embedded_backend
+        ports:
+            - '3000:3000'
+        depends_on:
+            - postgres
+        environment:
+            - DATABASE_URL=postgresql://postgres_user:postgres_password@postgres:5432/embedded_db?schema=public
+            - OPENAI_API_KEY=${OPENAI_API_KEY}
+            - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/image-captioning.json
+            - GOOGLE_PROJECT_ID=${GOOGLE_PROJECT_ID}
+            - GOOGLE_LOCATION=${GOOGLE_LOCATION}
+        volumes:
+            - ./uploads:/usr/src/app/uploads
+            - ./image-captioning.json:/usr/src/app/image-captioning.json
+
 volumes:
     pgdata:
