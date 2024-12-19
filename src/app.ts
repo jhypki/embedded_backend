@@ -4,11 +4,15 @@ import path from 'path';
 import cors from 'cors';
 import { imagesRoutes } from './routes/imagesRoutes';
 import { activationsRoutes } from './routes/activationsRoutes';
+import errorHandler from './middleware/error-handler';
+import { authenticationMiddleware } from './middleware/authenticationMiddleware';
 
 export const app: Express = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.use(authenticationMiddleware);
 
 app.use('/esp', espRoutes);
 app.use('/images', imagesRoutes);
@@ -21,3 +25,5 @@ app.use(
         }
     })
 );
+
+app.use(errorHandler);
