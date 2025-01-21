@@ -12,12 +12,24 @@ class EspController {
                 return;
             }
 
+            // Step 1: Save the uploaded file (DB write, file system, etc.)
             const savedImage = await imageService.saveImage(file);
 
+            // Step 2: Immediately return success response to the client.
             res.status(200).json({
                 message: 'File uploaded successfully!',
                 image: savedImage
             });
+
+            // Step 3: Trigger label generation in the background, after the response is sent.
+            imageService
+                .generateLabelForImage(savedImage.id)
+                .then(() => {
+                    console.log(`Successfully generated label for image ID = ${savedImage.id}`);
+                })
+                .catch((error) => {
+                    console.error(`Error generating label for image ID = ${savedImage.id}:`, error);
+                });
         } catch (error) {
             console.error('Error handling file upload:', error);
             res.status(500).json({
