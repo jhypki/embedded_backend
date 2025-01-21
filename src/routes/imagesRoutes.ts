@@ -6,3 +6,4 @@ export const imagesRoutes = Router();
 imagesRoutes.get('/:id', (req: Request, res: Response) => imageController.getImageById(req, res));
 imagesRoutes.get('/', (req: Request, res: Response) => imageController.getImages(req, res));
 imagesRoutes.get('/:id/label', (req: Request, res: Response) => imageController.generateLabelForImage(req, res));
+imagesRoutes.delete('/:id', (req: Request, res: Response) => imageController.deleteImage(req, res));

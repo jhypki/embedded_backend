@@ -34,6 +34,17 @@ export class ImageController {
             res.status(500).json({ message: 'Failed to generate label' });
         }
     }
+
+    async deleteImage(req: Request, res: Response): Promise<void> {
+        const id = req.params.id;
+        try {
+            await imageService.deleteImage(Number(id));
+            res.status(200).json({ message: 'Image deleted successfully' });
+        } catch (error) {
+            console.error('Error deleting image:', error);
+            res.status(500).json({ message: 'Failed to delete image' });
+        }
+    }
 }
 
 export default new ImageController();

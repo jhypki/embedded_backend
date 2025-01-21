@@ -5,6 +5,7 @@ import imageRepository from '../repositories/imageRepository';
 import clientService from './clientService';
 import activationService from './activationService';
 import path from 'path';
+import fs from 'fs/promises';
 
 class ImageService {
     async saveImage(file: Express.Multer.File): Promise<Image> {
@@ -58,6 +59,23 @@ class ImageService {
         }
 
         return await imageRepository.update(id, { ...image, label: label.charAt(0).toUpperCase() + label.slice(1) });
+    }
+
+    async deleteImage(id: number): Promise<void> {
+        const image = await imageRepository.findById(id);
+
+        if (!image) {
+            throw new Error('Image not found');
+        }
+
+        try {
+            await fs.unlink(image.filepath);
+        } catch (err) {
+            console.error(`Failed to delete file: ${image.filepath}`, err);
+            throw new Error('Failed to delete file from server');
+        }
+
+        await imageRepository.delete(id);
     }
 }
 
