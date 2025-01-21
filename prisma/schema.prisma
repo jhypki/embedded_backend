@@ -23,6 +23,11 @@ model Image {
   label      String?
 }
 
+model Email {
+  id         Int      @id @default(autoincrement())
+  email      String
+}
+
 model Activation {
   id          Int      @id @default(autoincrement())
   activatedAt DateTime @default(now())

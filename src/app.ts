@@ -6,6 +6,7 @@ import { imagesRoutes } from './routes/imagesRoutes';
 import { activationsRoutes } from './routes/activationsRoutes';
 import errorHandler from './middleware/error-handler';
 import { authenticationMiddleware } from './middleware/authenticationMiddleware';
+import { emailRoutes } from './routes/emailRoutes';
 
 export const app: Express = express();
 
@@ -17,6 +18,7 @@ app.use(authenticationMiddleware);
 app.use('/esp', espRoutes);
 app.use('/images', imagesRoutes);
 app.use('/activations', activationsRoutes);
+app.use('/email', emailRoutes);
 app.use(
     '/uploads',
     express.static(path.join(__dirname, '../uploads'), {
@@ -25,5 +27,7 @@ app.use(
         }
     })
 );
+
+
 
 app.use(errorHandler);
