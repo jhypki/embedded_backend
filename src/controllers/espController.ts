@@ -3,6 +3,7 @@ import imageService from '../services/imageService';
 
 class EspController {
     async uploadImage(req: Request, res: Response): Promise<void> {
+        console.log('Handling file upload:', req.file);
         try {
             const file = req.file;
 
